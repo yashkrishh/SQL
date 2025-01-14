@@ -1,0 +1,11 @@
+select name from Employee
+where id in (select managerId from (select managerId,count(*) 
+from Employee group by managerId having count(*) >=5) as subquery) 
+
+
+
+---every derived table (subquery) in MySQL must have its own alias : Hence "as subquery"
+
+/* PostgreSQL treats cnt as a column alias in the derived table, 
+but it doesn't allow direct reference to aliases in the HAVING clause. 
+Instead, you need to refer to the expression that creates the alias (i.e., COUNT(*)), not the alias itself */
